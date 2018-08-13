@@ -40,7 +40,7 @@ pub struct TaxCode{
 impl TaxCode{
     pub fn new(inflation_calc: InflationCalculator) -> Self{
         let file = File::open("data/headofhousehold.csv").unwrap();
-        let mut buf_reader = BufReader::new(file);
+        let buf_reader = BufReader::new(file);
 
 
         let mut rdr = ReaderBuilder::new()
@@ -95,7 +95,7 @@ impl TaxCode{
             let adjusted_income = self.inflation_calc.adjust_for_inflation(current_day_income, year.clone());
             let tax_bill = calculate_tax(&adjusted_income, brackets);
             let actual_tax_rate = tax_bill.cents as f32 / adjusted_income.cents as f32;
-            println!("In {}, someone earning {:?} paid a rate of {:.2?}", year, adjusted_income, actual_tax_rate);
+            //println!("In {}, someone earning {:?} paid a rate of {:.2?}", year, adjusted_income, actual_tax_rate);
             (year.clone(), actual_tax_rate)
         }).collect()
     }
